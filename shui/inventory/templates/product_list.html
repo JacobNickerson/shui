@@ -1,0 +1,14 @@
+<h1>Inventory</h1>
+<a href="{% url 'product-add' %}">Add product</a>
+<ul>
+  {% for product in object_list %}
+    <li>
+      {{ product.name }} ({{ product.sku }}) -
+      {{ product.quantity }} @ ${{ product.price }}
+      <a href="{% url 'product-edit' product.pk %}">Edit</a>
+      <a href="{% url 'product-delete' product.pk %}">Delete</a>
+    </li>
+  {% empty %}
+    <li>No products</li>
+  {% endfor %}
+</ul>

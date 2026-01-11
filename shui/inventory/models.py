@@ -1,0 +1,27 @@
+from django.db import models
+
+class Brand(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=200)
+    sku = models.CharField(max_length=100, unique=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True)
+    short_description = models.TextField(blank=True, null=True)
+    long_description = models.TextField(blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
