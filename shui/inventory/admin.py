@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Product, Brand, Category, Location
+from django.utils.html import format_html
 
 admin.site.site_header = "Shui Inventory Management"
 admin.site.site_title = "Shui Inventory Admin"
@@ -7,7 +8,7 @@ admin.site.index_title = "Administration"
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "sku", "category", "brand", "description", "location", "source", "updated_at")
+    list_display = ("image_thumbnail", "name", "sku", "category", "brand", "description", "location", "source", "updated_at")
     search_fields = ("name", "sku", "category", "brand", "location", "source")
     autocomplete_fields = ("category", "brand")
 
@@ -19,6 +20,22 @@ class ProductAdmin(admin.ModelAdmin):
         "location",
         "source"
     )
+
+    def image_thumbnail(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="height: 50px; width: auto;" />',
+                obj.image.url,
+            )
+        return "-"
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="max-height: 300px;" />',
+                obj.image.url,
+            )
+        return "No image"
+    image_thumbnail.short_description = "Image"
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
