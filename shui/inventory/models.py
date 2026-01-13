@@ -29,7 +29,7 @@ class Product(models.Model):
     sku = models.CharField(max_length=100, unique=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True)
-    location = models.ForeignKey(Location, on_delete=models.PROTECT, blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
     source = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)

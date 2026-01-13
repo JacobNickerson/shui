@@ -9,7 +9,7 @@ admin.site.index_title = "Administration"
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "sku", "category", "brand", "description", "location", "source", "updated_at")
     search_fields = ("name", "sku", "category", "brand", "location", "source")
-    autocomplete_fields = ("category", "brand", "location")
+    autocomplete_fields = ("category", "brand")
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
