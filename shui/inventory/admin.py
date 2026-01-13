@@ -11,6 +11,15 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ("name", "sku", "category", "brand", "location", "source")
     autocomplete_fields = ("category", "brand")
 
+    list_filter = (
+        "name",
+        "sku",
+        "category",
+        "brand",
+        "location",
+        "source"
+    )
+
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
     list_display = ("name",)
