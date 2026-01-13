@@ -33,5 +33,3 @@ class CategoryCreateView(CreateView):
     model = Category
     fields = ["name"]
     success_url = reverse_lazy("product-list")
-
-# TODO: Update views
