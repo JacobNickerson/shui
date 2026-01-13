@@ -19,6 +19,7 @@
           python-dotenv
           black
           isort
+          pillow
         ]);
       in
       {
