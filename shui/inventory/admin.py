@@ -11,6 +11,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("image_thumbnail", "name", "sku", "category", "brand", "description", "location", "source", "updated_at")
     search_fields = ("name", "sku", "category", "brand", "location", "source")
     autocomplete_fields = ("category", "brand")
+    readonly_fields = ("image_preview",)
+    fields = ("name", "sku", "image", "image_preview", "category", "brand", "location", "source", "description")
 
     list_filter = (
         "name",
