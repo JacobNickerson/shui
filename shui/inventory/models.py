@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -34,6 +35,20 @@ class Product(models.Model):
     source = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        '''
+        Resize image to a maximum of 800x800 pixels upon saving.
+        '''
+        super().save(*args, **kwargs)
+
+        if not self.image:
+            return
+        
+        img = Image.open(self.image.path)
+        max_size = (800, 800)
+        img.thumbnail(max_size,Image.LANCZOS)
+        img.save(self.image.path, optimize=True, quality=85)
 
     def __str__(self):
         return self.name
