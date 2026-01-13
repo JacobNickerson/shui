@@ -27,7 +27,6 @@ class BrandCreateView(CreateView):
     model = Brand
     fields = ["name"]
     success_url = reverse_lazy("product-list")
-    #template_name = "inventory/brand_form.html"
 
 class CategoryCreateView(CreateView):
     model = Category
