@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv(".env")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "storages",
     "inventory"
 ]
 
@@ -120,26 +124,27 @@ USE_I18N = True
 USE_TZ = True
 
 
-# S3 Bucket for files
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# Stored in an S3 bucket
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE 
 
 AWS_ACCESS_KEY_ID = os.environ["S3_ACCESS_ID"]
 AWS_SECRET_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = os.environ["S3_BUCKET_NAME"]
+AWS_S3_ENDPOINT_URL = os.environ["S3_ENDPOINT_URL"]
+AWS_S3_REGION_NAME = os.environ["S3_REGION_NAME"]
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL = None
 
-AWS_STORAGE_BUCKET_NAME = "staticfiles"
+S3_PUBLIC_URL = os.environ["S3_PUBLIC_URL"] 
+STATIC_URL =  S3_PUBLIC_URL + "/static/"
+MEDIA_URL = S3_PUBLIC_URL + "/media/"
 
-AWS_S3_ENDPOINT_URL = "https://hpmwwfbdvrypusdwvnzu.storage.supabase.co/storage/v1/s3"
-AWS_S3_REGION_NAME = "us-east-1"
-
-AWS_S3_ADDRESSING_STYLE = "path"
-AWS_QUERYSTRING_AUTH = False
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL =  AWS_S3_ENDPOINT_URL + "/static/"
+# Local development setting
 STATIC_ROOT =  BASE_DIR / "static"
-MEDIA_URL = AWS_S3_ENDPOINT_URL + "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
