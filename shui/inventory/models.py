@@ -38,7 +38,7 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         '''
-        Resize image to a maximum of 800x800 pixels upon saving.
+        Resize image to a maximum of 100x100 pixels upon saving.
         '''
         super().save(*args, **kwargs)
 
@@ -46,9 +46,9 @@ class Product(models.Model):
             return
         
         img = Image.open(self.image.path)
-        max_size = (800, 800)
+        max_size = (100, 100)
         img.thumbnail(max_size,Image.LANCZOS)
-        img.save(self.image.path, optimize=True, quality=85)
+        img.save(self.image.path, optimize=True, quality=85, format="webp")
 
     def __str__(self):
         return self.name
