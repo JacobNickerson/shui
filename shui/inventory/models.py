@@ -1,8 +1,10 @@
 import uuid
-from django.db import models
-from django.core.files.base import ContentFile
-from PIL import Image
 from io import BytesIO
+
+from django.core.files.base import ContentFile
+from django.db import models
+from PIL import Image
+
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -15,11 +17,12 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        verbose_name="Category"
-        verbose_name_plural="Categories"
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
+
 
 class Location(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -31,8 +34,10 @@ class Location(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     sku = models.CharField(max_length=100, unique=True)
-    image = models.ImageField(upload_to='product_images/', blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True)
+    image = models.ImageField(upload_to="product_images/", blank=True, null=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.PROTECT, blank=True, null=True
+    )
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     source = models.CharField(max_length=100, blank=True, null=True)
@@ -40,21 +45,19 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        '''
+        """
         Resize image to a maximum of 100x100 pixels upon saving.
-        '''
+        """
         if not self.image:
             return
         img = Image.open(self.image)
 
         max_size = (100, 100)
-        img.thumbnail(max_size,Image.LANCZOS)
-        buffer=BytesIO()
+        img.thumbnail(max_size, Image.LANCZOS)
+        buffer = BytesIO()
         img.save(buffer, optimize=True, quality=85, format="webp")
         self.image.save(
-            f"{uuid.uuid4()}.webp",
-            ContentFile(buffer.getvalue()),
-            save=False
+            f"{uuid.uuid4()}.webp", ContentFile(buffer.getvalue()), save=False
         )
         super().save(*args, **kwargs)
 

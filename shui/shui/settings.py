@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["SECRET_KEY"] 
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(',')
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "storages",
     "django_cleanup.apps.CleanupConfig",
-    "inventory"
+    "inventory",
 ]
 
 MIDDLEWARE = [
@@ -84,7 +84,7 @@ DATABASES = {
         "PASSWORD": os.environ["DB_PASS"],
         "HOST": os.environ["DB_HOST"],
         "PORT": os.environ["DB_PORT"],
-        "OPTIONS": {"sslmode": "require"}
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 
@@ -124,21 +124,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 # Stored in an S3 bucket
 STORAGES = {
-	"default": {
+    "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-        },
+        "OPTIONS": {},
     },
-    "staticfiles" : {
+    "staticfiles": {
         "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-        },
+        "OPTIONS": {},
     },
-	"media" : {
+    "media": {
         "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-        },
-    }
+        "OPTIONS": {},
+    },
 }
 
 AWS_ACCESS_KEY_ID = os.environ["S3_ACCESS_ID"]
@@ -150,8 +147,8 @@ AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_S3_FILE_OVERWRITE = True
 AWS_DEFAULT_ACL = None
 
-S3_PUBLIC_URL = os.environ["S3_PUBLIC_URL"] 
-STATIC_URL =  S3_PUBLIC_URL + "/static/"
+S3_PUBLIC_URL = os.environ["S3_PUBLIC_URL"]
+STATIC_URL = S3_PUBLIC_URL + "/static/"
 MEDIA_URL = S3_PUBLIC_URL + "/media/"
 
 # Default primary key field type
