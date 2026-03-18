@@ -22,6 +22,8 @@
           isort
           pillow
           gunicorn
+          boto3
+          django-storages
         ]);
       in
       {
