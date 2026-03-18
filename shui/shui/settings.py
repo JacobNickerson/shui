@@ -124,8 +124,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 # Stored in an S3 bucket
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-STATICFILES_STORAGE = DEFAULT_FILE_STORAGE 
+STORAGES = {
+	"default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+        },
+    },
+    "staticfiles" : {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+        },
+    },
+	"media" : {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+        },
+    }
+}
 
 AWS_ACCESS_KEY_ID = os.environ["S3_ACCESS_ID"]
 AWS_SECRET_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
@@ -139,10 +154,6 @@ AWS_DEFAULT_ACL = None
 S3_PUBLIC_URL = os.environ["S3_PUBLIC_URL"] 
 STATIC_URL =  S3_PUBLIC_URL + "/static/"
 MEDIA_URL = S3_PUBLIC_URL + "/media/"
-
-# Local development setting
-STATIC_ROOT =  BASE_DIR / "static"
-MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
