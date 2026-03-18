@@ -16,10 +16,12 @@
         pythonEnv = python.withPackages (ps: with ps; [
           django
           psycopg
+          psycopg2-binary
           python-dotenv
           black
           isort
           pillow
+          gunicorn
         ]);
       in
       {
