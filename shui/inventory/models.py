@@ -1,5 +1,7 @@
 from django.db import models
+from django.core.files.base import ContentFile
 from PIL import Image
+from io import BytesIO
 
 class Brand(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -40,15 +42,20 @@ class Product(models.Model):
         '''
         Resize image to a maximum of 100x100 pixels upon saving.
         '''
-        super().save(*args, **kwargs)
-
         if not self.image:
             return
-        
-        img = Image.open(self.image.path)
+        img = Image.open(self.image)
+
         max_size = (100, 100)
         img.thumbnail(max_size,Image.LANCZOS)
-        img.save(self.image.path, optimize=True, quality=85, format="webp")
+        buffer=BytesIO()
+        img.save(buffer, optimize=True, quality=85, format="webp")
+        self.image.save(
+            "test.webp",
+            ContentFile(buffer.getvalue()),
+            save=False
+        )
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
