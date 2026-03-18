@@ -24,6 +24,7 @@
           gunicorn
           boto3
           django-storages
+          django-cleanup
         ]);
       in
       {

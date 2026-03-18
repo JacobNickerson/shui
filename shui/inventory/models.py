@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.core.files.base import ContentFile
 from PIL import Image
@@ -51,7 +52,7 @@ class Product(models.Model):
         buffer=BytesIO()
         img.save(buffer, optimize=True, quality=85, format="webp")
         self.image.save(
-            "test.webp",
+            f"{uuid.uuid4()}.webp",
             ContentFile(buffer.getvalue()),
             save=False
         )
