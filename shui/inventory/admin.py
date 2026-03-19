@@ -17,6 +17,7 @@ class ProductAdmin(admin.ModelAdmin):
         "category",
         "brand",
         "description",
+        "qty",
         "location",
         "source",
         "updated_at",
@@ -34,6 +35,7 @@ class ProductAdmin(admin.ModelAdmin):
         "location",
         "source",
         "description",
+        "qty"
     )
 
     list_filter = ("name", "sku", "category", "brand", "location", "source")
