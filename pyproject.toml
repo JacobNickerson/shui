@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shui"
+version = "0.1.0"
+description = "Django inventory application"
+requires-python = ">=3.12"
+
+dependencies = [
+    "Django",
+    "psycopg",
+    "psycopg2-binary",
+    "python-dotenv",
+    "Pillow",
+    "gunicorn",
+    "boto3",
+    "django-storages",
+    "django-cleanup",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
