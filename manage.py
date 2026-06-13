@@ -1,4 +1,3 @@
-#!/nix/store/iizfzmqjdfvbyx82gqw92glb5zl6m4my-python3-3.12.12/bin/python
 """Django's command-line utility for administrative tasks."""
 import os
 import sys

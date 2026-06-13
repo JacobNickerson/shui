@@ -1,5 +1,5 @@
 {
-  description = "Django inventory dev environment";
+  description = "Django inventory";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -8,39 +8,26 @@
 
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
+    let
+      pkgs = import nixpkgs {
+        inherit system;
+      };
+    in
+    {
+      packages.default =
+        pkgs.callPackage ./package.nix { };
 
-        python = pkgs.python312;
+      devShells.default = pkgs.mkShell {
+        packages = [
+          pkgs.uv
+          pkgs.python312
+          pkgs.sqlite
+        ];
 
-        pythonEnv = python.withPackages (ps: with ps; [
-          django
-          psycopg
-          psycopg2-binary
-          python-dotenv
-          black
-          isort
-          pillow
-          gunicorn
-          boto3
-          django-storages
-          django-cleanup
-        ]);
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          packages = [
-            pythonEnv
-            pkgs.postgresql
-            pkgs.sqlite
-          ];
-
-          shellHook = ''
-            export DJANGO_SETTINGS_MODULE=shui.settings
-            export PYTHONPATH=$PWD
-            echo "Django inventory dev shell"
-          '';
-        };
-      });
+        shellHook = ''
+          export DJANGO_SETTINGS_MODULE=shui.settings
+          export PYTHONPATH=$PWD
+        '';
+      };
+    });
 }
-
