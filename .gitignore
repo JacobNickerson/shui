@@ -3,3 +3,5 @@ shui/db.sqlite3
 shui/*/__pycache__
 shui/*/*/__pycache__
 shui/media
+shui.egg-info
+.venv
