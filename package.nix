@@ -1,13 +1,13 @@
-{ lib
-, python312
-, python312Packages
+{ lib,
+  python312,
+  python312Packages
 }:
 
 python312Packages.buildPythonApplication rec {
   pname = "shui";
   version = "0.1.0";
 
-  src = ./.;
+  src = lib.cleanSource ./.;
 
   pyproject = true;
 
