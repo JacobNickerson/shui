@@ -5,3 +5,4 @@ shui/*/*/__pycache__
 shui/media
 shui.egg-info
 .venv
+.env

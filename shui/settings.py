@@ -24,9 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+# TODO: UNCOMMENT ME! 
+# ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -75,16 +77,10 @@ WSGI_APPLICATION = "shui.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DB_NAME"],
-        "USER": os.environ["DB_USER"],
-        "PASSWORD": os.environ["DB_PASS"],
-        "HOST": os.environ["DB_HOST"],
-        "PORT": os.environ["DB_PORT"],
-        "OPTIONS": {"sslmode": "require"},
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -122,34 +118,20 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-# Stored in an S3 bucket
 STORAGES = {
     "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {},
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {},
-    },
-    "media": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {},
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-AWS_ACCESS_KEY_ID = os.environ["S3_ACCESS_ID"]
-AWS_SECRET_ACCESS_KEY = os.environ["S3_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = os.environ["S3_BUCKET_NAME"]
-AWS_S3_ENDPOINT_URL = os.environ["S3_ENDPOINT_URL"]
-AWS_S3_REGION_NAME = os.environ["S3_REGION_NAME"]
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-AWS_S3_FILE_OVERWRITE = True
-AWS_DEFAULT_ACL = None
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
 
-S3_PUBLIC_URL = os.environ["S3_PUBLIC_URL"]
-STATIC_URL = S3_PUBLIC_URL + "/static/"
-MEDIA_URL = S3_PUBLIC_URL + "/media/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
