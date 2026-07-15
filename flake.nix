@@ -21,7 +21,6 @@
         packages = [
           pkgs.uv
           pkgs.python312
-          pkgs.postgresql
           pkgs.sqlite
         ];
 
