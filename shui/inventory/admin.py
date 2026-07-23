@@ -22,7 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
         "source",
         "updated_at",
     )
-    search_fields = ("name", "sku", "category", "brand", "location", "source")
+    search_fields = ("name", "sku", "category__name", "brand__name", "location", "source")
     autocomplete_fields = ("category", "brand")
     readonly_fields = ("image_preview",)
     fields = (
