@@ -21,6 +21,12 @@ try:
 except:
     print("error: could not set SHUI_DATA_DIR, defaulting to BASE_DIR")
 
+try:
+    STATE_DIR = Path(os.getenv("SHUI_STATE_DIR",DATA_DIR))
+except:
+    print("error: could not set SHUI_STATE_DIR, defaulting to DATA_DIR")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -130,7 +136,7 @@ STORAGES = {
 MEDIA_ROOT = DATA_DIR / "media"
 MEDIA_URL = "/media/"
 
-STATIC_ROOT = DATA_DIR / "staticfiles"
+STATIC_ROOT = STATE_DIR / "staticfiles"
 STATIC_URL = "/static/"
 
 # Default primary key field type
