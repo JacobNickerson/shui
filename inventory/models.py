@@ -49,17 +49,16 @@ class Product(models.Model):
         """
         Resize image to a maximum of 100x100 pixels upon saving.
         """
-        if not self.image:
-            return
-        img = Image.open(self.image)
+        if self.image:
+            img = Image.open(self.image)
 
-        max_size = (100, 100)
-        img.thumbnail(max_size, Image.LANCZOS)
-        buffer = BytesIO()
-        img.save(buffer, optimize=True, quality=85, format="webp")
-        self.image.save(
-            f"{uuid.uuid4()}.webp", ContentFile(buffer.getvalue()), save=False
-        )
+            max_size = (100, 100)
+            img.thumbnail(max_size, Image.LANCZOS)
+            buffer = BytesIO()
+            img.save(buffer, optimize=True, quality=85, format="webp")
+            self.image.save(
+                f"{uuid.uuid4()}.webp", ContentFile(buffer.getvalue()), save=False
+            )
         super().save(*args, **kwargs)
 
     def __str__(self):
