@@ -28,12 +28,9 @@ except:
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# TODO: UNCOMMENT ME! 
-# ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 
 # Application definition
 
@@ -77,7 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "shui.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
