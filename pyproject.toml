@@ -10,12 +10,9 @@ requires-python = ">=3.12"
 
 dependencies = [
     "Django",
-    "psycopg",
-    "psycopg2-binary",
     "python-dotenv",
     "Pillow",
     "gunicorn",
-    "boto3",
     "django-storages",
     "django-cleanup",
 ]
