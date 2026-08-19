@@ -133,10 +133,10 @@ STORAGES = {
     },
 }
 
-MEDIA_ROOT = DATA_DIR / "media"
+MEDIA_ROOT = DATA_DIR / "media/"
 MEDIA_URL = "/media/"
 
-STATIC_ROOT = STATE_DIR / "staticfiles"
+STATIC_ROOT = STATE_DIR / "staticfiles/"
 STATIC_URL = "/static/"
 
 # Default primary key field type
